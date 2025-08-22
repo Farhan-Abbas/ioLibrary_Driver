@@ -1,4 +1,6 @@
 #include <SPI.h>
+#include <IPAddress.h>
+#include "libraries/Ethernet/socket.h"
 #include "libraries/ArduinoWiznet/Ethernet_Arduino.h"
 
 // Define CS control for WIZnet module (change pin as required)

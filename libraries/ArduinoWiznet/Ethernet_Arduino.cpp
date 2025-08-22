@@ -1,5 +1,11 @@
 #include "Ethernet_Arduino.h"
 #include <SPI.h>
+// Helper functions used as C-style callbacks for the wizchip library.
+static uint8_t wiz_spi_read(void) { return SPI.transfer(0x00); }
+static void wiz_spi_write(uint8_t b) { SPI.transfer(b); }
+static uint8_t wiz_cs_pin = 255;
+static void wiz_cs_select(void) { digitalWrite(wiz_cs_pin, LOW); }
+static void wiz_cs_deselect(void) { digitalWrite(wiz_cs_pin, HIGH); }
 
 EthernetClass::EthernetClass(uint8_t csPin, SPIClass &spi, uint8_t resetPin)
   : _csPin(csPin), _resetPin(resetPin), _spi(&spi), spiSpeed(4000000)
@@ -17,15 +23,10 @@ void EthernetClass::config(IPAddress ip, IPAddress gateway, IPAddress subnet, IP
 
 int EthernetClass::begin()
 {
-  // register SPI callbacks using simple Arduino SPI.transfer
-  auto spi_rb = []()->uint8_t { return SPI.transfer(0x00); };
-  auto spi_wb = [](uint8_t b)->void { SPI.transfer(b); };
-  // CS callbacks
-  auto cs_sel = [this](){ digitalWrite(this->_csPin, LOW); };
-  auto cs_desel = [this](){ digitalWrite(this->_csPin, HIGH); };
-
-  reg_wizchip_cs_cbfunc((void(*)())cs_sel, (void(*)())cs_desel);
-  reg_wizchip_spi_cbfunc((uint8_t(*)(void))spi_rb, (void(*)(uint8_t))spi_wb);
+  // register SPI callbacks using file-scope helper functions
+  wiz_cs_pin = this->_csPin;
+  reg_wizchip_cs_cbfunc(wiz_cs_select, wiz_cs_deselect);
+  reg_wizchip_spi_cbfunc(wiz_spi_read, wiz_spi_write);
 
   pinMode(_csPin, OUTPUT);
   digitalWrite(_csPin, HIGH);

@@ -2,6 +2,7 @@
 #include <Arduino.h>
 #include <SPI.h>
 #include "../Ethernet/wizchip_conf.h"
+#include <IPAddress.h>
 
 class EthernetClass {
 public:
