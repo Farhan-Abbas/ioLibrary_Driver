@@ -286,7 +286,7 @@ typedef   int16_t   datasize_t;     ///< sent or received data size
 typedef   uint8_t   iodata_t;       ///< IO access unit. bus width
 typedef   int16_t   datasize_t;     ///< sent or received data size
 #include "./W6300/w6300.h"
-#include "../Application/Application.h"
+#include "../../Application/Application.h"
 
 #else
    #error "Unknown defined _WIZCHIP_. You should define one of 5100, 5200, 5300, 5500, 6100 and 6300!!!"

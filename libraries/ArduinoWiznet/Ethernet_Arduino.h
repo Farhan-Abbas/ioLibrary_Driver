@@ -1,7 +1,7 @@
 #pragma once
 #include <Arduino.h>
 #include <SPI.h>
-#include "../Ethernet/W5500/wizchip_conf.h"
+#include "../Ethernet/wizchip_conf.h"
 
 class EthernetClass {
 public:

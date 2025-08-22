@@ -35,7 +35,7 @@
 #define      _W6300_H_
 
 #include <stdint.h>
-#include "wizchip_conf.h"
+#include "../wizchip_conf.h"
 
 
 #ifdef __cplusplus
