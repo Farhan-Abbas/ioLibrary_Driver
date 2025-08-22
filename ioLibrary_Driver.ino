@@ -2,6 +2,12 @@
 #include <IPAddress.h>
 #include "libraries/Ethernet/socket.h"
 #include "libraries/ArduinoWiznet/Ethernet_Arduino.h"
+#include "libraries/ArduinoWiznet/Ethernet_Arduino.cpp"
+extern "C" {
+#include "libraries/Ethernet/socket.c"
+#include "libraries/Ethernet/wizchip_conf.c"
+#include "libraries/Ethernet/W6300/w6300.c"
+}
 
 // Define CS control for WIZnet module (change pin as required)
 const int CS_PIN = 10;
